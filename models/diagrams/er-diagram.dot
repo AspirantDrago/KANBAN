@@ -1,0 +1,20 @@
+digraph "db" {
+
+splines  = ortho;
+fontname = "Inconsolata";
+
+node [colorscheme = ylgnbu4];
+edge [colorscheme = dark28, dir = both];
+
+container   [shape = record, label = "{ container |  code : varchar\l  title : varchar\l| id : integer\l }"];
+product     [shape = record, label = "{ product |  title : varchar\l  description : text\l  provider_id : integer\l  product_code : integer\l| _id : integer\l }"];
+provider    [shape = record, label = "{ provider |  title : varchar\l  description : varchar\l  address : varchar\l  phone : varchar\l  email : varchar\l  site : varchar\l| id : integer\l }"];
+supply_card [shape = record, label = "{ supply_card |  product_id : integer\l  container_id : integer\l  count : integer\l  warehouse_to_id : integer\l| _id : integer\l }"];
+warehouse   [shape = record, label = "{ warehouse |  code : varchar\l  title : varchar\l  address : varchar\l| id : integer\l }"];
+
+product     -> provider    [color = "#595959", style = solid , arrowtail = none    , arrowhead = normal  , taillabel = "", label = "provider_id:id", headlabel = ""];
+supply_card -> container   [color = "#595959", style = solid , arrowtail = none    , arrowhead = normal  , taillabel = "", label = "container_id:id", headlabel = ""];
+supply_card -> product     [color = "#595959", style = solid , arrowtail = none    , arrowhead = normal  , taillabel = "", label = "product_id:_id", headlabel = ""];
+supply_card -> warehouse   [color = "#595959", style = solid , arrowtail = none    , arrowhead = normal  , taillabel = "", label = "warehouse_to_id:id", headlabel = ""];
+
+}

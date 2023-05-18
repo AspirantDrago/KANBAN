@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>64ace612-f2ad-4e14-ab46-078765c85b35</OriginalElement>
+  <nodes>
+    <node x="61.0" y="154.0">64ace612-f2ad-4e14-ab46-078765c85b35.TABLE:main.product</node>
+    <node x="390.0" y="364.0">64ace612-f2ad-4e14-ab46-078765c85b35.TABLE:main.container</node>
+    <node x="67.0" y="-104.0">64ace612-f2ad-4e14-ab46-078765c85b35.TABLE:main.provider</node>
+    <node x="50.5" y="364.0">64ace612-f2ad-4e14-ab46-078765c85b35.TABLE:main.supply_card</node>
+    <node x="-233.0" y="364.0">64ace612-f2ad-4e14-ab46-078765c85b35.TABLE:main.warehouse</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="64ace612-f2ad-4e14-ab46-078765c85b35.TABLE:main.supply_card" target="64ace612-f2ad-4e14-ab46-078765c85b35.TABLE:main.product" relationship="REFERENCES">
+      <point x="0.0" y="-80.0" />
+      <point x="0.0" y="80.0" />
+    </edge>
+    <edge source="64ace612-f2ad-4e14-ab46-078765c85b35.TABLE:main.supply_card" target="64ace612-f2ad-4e14-ab46-078765c85b35.TABLE:main.warehouse" relationship="REFERENCES">
+      <point x="-97.5" y="12.0" />
+      <point x="-21.75" y="456.0" />
+      <point x="-21.75" y="432.0" />
+      <point x="69.5" y="0.0" />
+    </edge>
+    <edge source="64ace612-f2ad-4e14-ab46-078765c85b35.TABLE:main.supply_card" target="64ace612-f2ad-4e14-ab46-078765c85b35.TABLE:main.container" relationship="REFERENCES">
+      <point x="97.5" y="-24.0" />
+      <point x="-58.5" y="0.0" />
+    </edge>
+    <edge source="64ace612-f2ad-4e14-ab46-078765c85b35.TABLE:main.product" target="64ace612-f2ad-4e14-ab46-078765c85b35.TABLE:main.provider" relationship="REFERENCES">
+      <point x="0.0" y="-80.0" />
+      <point x="0.0" y="104.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.041666666666667" showDependencies="false" x="-2.577749999999753" y="313.9129999999999" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
