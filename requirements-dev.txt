@@ -1,0 +1,2 @@
+Sphinx==7.0.1
+Flask-Alembic==2.0.1
