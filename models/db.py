@@ -3,6 +3,8 @@ from typing import Optional
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy.session import Session
+
 from config import DB_NAME
 
 
@@ -25,6 +27,11 @@ def db_factory():
     if db:
         return
     db = SQLAlchemy()
+
+
+def create_session():
+    session = Session(db)
+    return session
 
 
 db: Optional[SQLAlchemy] = None

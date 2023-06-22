@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>КANBAN-карта {{ card_code }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/card.css') }}">
+    <script lang="javascript" src="{{ url_for('static', filename='js/JsBarcode.code128.min.js') }}"></script>
+</head>
+<body>
+<div class="card-container">
+    <table class="card">
+        <colgroup>
+            <col span="1" style="width: 55px;">
+            <col span="1" style="width: 75px;">
+            <col span="1" style="width: 75px;">
+            <col span="1" style="width: 300px;">
+        </colgroup>
+        <tbody>
+        <tr>
+            <td rowspan="4" class="no_border">
+                <p class="card_value card_code">
+                    <a href="{{ url_card }}">
+                        {{ card.code }}
+                    </a>
+                </p>
+            </td>
+            <td colspan="3" class="no_border">
+                <p class="table-head">
+                    <a href="{{ url_card }}">
+                        KANBAN-карта поставки № <strong>{{ card.code }}</strong>
+                    </a>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <a href="{{ url_provider }}">
+                    <p class="card_lable">
+                        Поставщик
+                    </p>
+                    <p class="card_value">
+                        {{ card.product.provider.title }}
+                    </p>
+                </a>
+            </td>
+            <td>
+                <a href="{{ url_product }}">
+                    <p class="card_lable">
+                        Номер изделия
+                    </p>
+                    <p class="card_value">
+                        {{ card.product.product_code }}
+                    </p>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="{{ url_container }}">
+                    <p class="card_lable">
+                        Контейнер
+                        <br>&nbsp;
+                    </p>
+                    <p class="card_value">
+                        {{ card.container.code }}
+                    </p>
+                </a>
+            </td>
+            <td>
+                <a href="{{ url_card }}">
+                    <p class="card_lable">
+                        Кол-во изделий
+                    </p>
+                    <p class="card_value">
+                        {{ card.count }}
+                    </p>
+                </a>
+            </td>
+            <td>
+                <a href="{{ url_product }}">
+                    <p class="card_lable">
+                        Описание
+                    </p>
+                    <p class="card_value" style="height: 2em">
+                        {{ card.product.title }}
+                    </p>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <a href="{{ url_warehouse }}">
+                    <p class="card_lable">
+                        Место доставки
+                    </p>
+                    <p class="card_value">
+                        {{ card.warehouse_to.code }}
+                    </p>
+                </a>
+            </td>
+            <td class="no_border">
+                <p>
+                    <svg id="barcode"></svg>
+                </p>
+                <p>
+                    {{ card.created_datetime.strftime('%d.%m.%Y %H:%M:%S') }}
+                </p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    {% if card.completed %}
+        <div class="closed-card">
+            <a href="{{ url_card }}">
+                <svg>
+                    <defs>
+                        <mask id="mask" x="0" y="0" width="100%" height="100%">
+                            <rect id="overlay" x="0" y="0" width="100%" height="100%"/>
+                            <text id="text"y="0">
+                                <tspan x="50%" dy="50%" class="header">ЗАКРЫТО</tspan>
+                                <tspan x="50%" dy="50%">
+                                    {{ card.completed_datetime.strftime('%d.%m.%Y %H:%M:%S') }}
+                                </tspan>
+                            </text>
+                        </mask>
+                    </defs>
+                    <rect id="r" x="0" y="0" width="100%" height="100%"/>
+                </svg>
+            </a>
+        </div>
+    {% endif %}
+</div>
+<script>
+    JsBarcode("#barcode", "{{ fullhost }}/{{ card.code }}", {
+        format: "CODE128",
+        lineColor: "#000",
+        width: 1,
+        height: 30,
+        displayValue: false,
+        margin: 0,
+    });
+</script>
+</body>
+</html>

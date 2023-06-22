@@ -32,4 +32,9 @@ class ProviderView(CustomView):
     )
     column_searchable_list = ('title', 'description', 'address')
     column_sortable_list = ('title',)
+    column_formatters = dict(
+        site=CustomView.link_blank_formatter,
+        phone=CustomView.link_tel_formatter,
+        email=CustomView.link_mail_formatter,
+    )
     name = 'Поставщики'

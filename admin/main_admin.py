@@ -29,7 +29,7 @@ class IndexView(AdminIndexView):
 
     @expose('/')
     def index(self):
-        return redirect('/admin/supplycard')
+        return redirect('/supplycard')
 
 
 def setup_admin(
@@ -41,6 +41,7 @@ def setup_admin(
         name=config_admin.APPLICATION_NAME,
         template_mode=config_admin.ADMIN_TEMPLATE_MODE,
         index_view=IndexView(),
+        url='/'
     )
     app.config['FLASK_ADMIN_SWATCH'] = config_admin.FLASK_ADMIN_SWATCH
     for model, View in models.items():
