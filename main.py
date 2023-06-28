@@ -3,6 +3,7 @@ from flask_babelex import Babel
 from flask_restful import Api
 from waitress import serve
 import logging
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
 from admin.main_admin import setup_admin
 from config import *
@@ -17,7 +18,7 @@ except ImportError:
     pass
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(name)s %(message)s')
-app = Flask(__name__)
+app = application = Flask(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
 db = open_db(app)
 api = Api(app)
@@ -25,6 +26,14 @@ babel = Babel(app, default_locale='ru')
 if has_alembic:
     alembic = Alembic()
     alembic.init_app(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    db_sess = create_session()
+    return db_sess.query(User).get(user_id)
 
 
 @babel.localeselector
@@ -36,6 +45,7 @@ def get_locale():
     return 'ru'
 
 
+@login_required
 @app.route('/<int:card_id>')
 def card(card_id: int):
     '''
@@ -45,13 +55,13 @@ def card(card_id: int):
     '''
     session = create_session()
     card = session.get(SupplyCard, card_id)
+    if not card:
+        return 'Карточка товара не найдена', 404
     url_card = f'/supplycard/details/?id={card._id}'
     url_provider = f'/provider/details/?id={card.product.provider_id}'
     url_container = f'/container/details/?id={card.container_id}'
     url_warehouse = f'/warehouse/details/?id={card.warehouse_to_id}'
     url_product = f'/product/details/?id={card.product_id}'
-    if not card:
-        return 'Карточка товара не найдена', 404
     return render_template(
         'card.html',
         card=card,
@@ -69,7 +79,8 @@ def main_page():
     return redirect('/supplycard')
 
 
-if __name__ == '__main__':
+def main():
+    global admin
     logging.info('Подключение к базе данных прошло успешно')
     if has_alembic:
         with app.app_context():
@@ -83,6 +94,10 @@ if __name__ == '__main__':
             except Exception as e:
                 logging.error(f'Ошибка миграции базы данных: {e}')
     admin = setup_admin(app, db)
+
+
+if __name__ == '__main__':
+    main()
     if DEBUG:
         app.run(port=PORT, host=HOST, debug=DEBUG)
     else:

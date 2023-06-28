@@ -4,10 +4,10 @@ Flask-BabelEx==0.9.4
 Flask-Login==0.6.2
 Flask-WTF==1.1.1
 Flask-RESTful==0.3.10
-Flask-SQLAlchemy==3.0.3
+Flask-SQLAlchemy==3.0.5
 SQLAlchemy-Serializer==1.4.1
 waitress==2.1.2
-email-validator==2.0.0.post2
 WTForms-Components==0.10.5
 WTForms-Alchemy==0.18.0
-phonenumbers==8.13.14
+phonenumbers==8.13.15
+email-validator==2.0.0.post2
